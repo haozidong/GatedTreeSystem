@@ -153,29 +153,31 @@ namespace GatedTreeSystem
                 RunOneBall();
             }
 
-            //Then iterate every node in the bottom level
-            int numberOfNodesOfUpperLevels = (int)Math.Pow(2, this.depth - 1) - 1;
-            int numberOfNodesOfThisLevel = (int)Math.Pow(2, this.depth - 1);
+            int nodeIndex = 0;
+            INode node = this.nodes[nodeIndex];
 
-            for (int nodeIndex = numberOfNodesOfUpperLevels;
-                nodeIndex < numberOfNodesOfUpperLevels + numberOfNodesOfThisLevel;
-                nodeIndex++)
+            while (nodeIndex < this.numberOfNodes)
             {
-                INode node = nodes[nodeIndex];
+                node = this.nodes[nodeIndex];
 
-                if (node.BallsPassedToLeft == 0)
-                {
-                    int keyNodeIndex = nodeIndex - numberOfNodesOfUpperLevels;
-                    return keyNodeIndex * 2 + 1;
-                }
-                else if (node.BallsPassedToRight == 0)
-                {
-                    int keyNodeIndex = nodeIndex - numberOfNodesOfUpperLevels;
-                    return keyNodeIndex * 2 + 2;
-                }
+                int nextNodeIndex = node.BallsPassedToLeft < node.BallsPassedToRight ?
+                    2 * nodeIndex + 1 :
+                    2 * nodeIndex + 2;
+
+                if (nextNodeIndex > this.numberOfNodes)
+                    break;
+
+                nodeIndex = nextNodeIndex;
             }
 
-            return -1;
+            //Translate the index to a lidex at the level instead of the whole tree.
+            int numberOfNodesOfUpperLevels = (int)Math.Pow(2, depth - 1) - 1;
+            nodeIndex = nodeIndex - numberOfNodesOfUpperLevels;
+
+            //Node index is start from 0, while returned human readable start from 1.
+            return node.BallsPassedToLeft == 0 ?
+                nodeIndex * 2 + 1 :
+                nodeIndex * 2 + 2;
         }
 
         /// <summary>
