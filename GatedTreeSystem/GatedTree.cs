@@ -100,33 +100,24 @@ namespace GatedTreeSystem
         {
             //The index of the node we will check next step.
             int keyNodeIndex = 0;
+            //The node we will check next step
+            INode node = nodes[keyNodeIndex];
 
             for (int level = 0; level < depth - 1; level++)
             {
-                //The node we will check next step
-                INode node = nodes[keyNodeIndex];
-
                 //If the gate is open to left, then the left child tree will get enough balls.
                 //So we only need to consider the right child tree.
                 //Vice versa.
-                if (node.GatePosition == GatePosition.Left)
-                {
-                    //the index of the root node of right child tree
-                    keyNodeIndex = 2 * keyNodeIndex + 2;
-                }
-                else
-                {
-                    //the index of the root node of left child tree
-                    keyNodeIndex = 2 * keyNodeIndex + 1;
-                }
+                keyNodeIndex = node.GatePosition == GatePosition.Left ?
+                    2 * keyNodeIndex + 2 :
+                    2 * keyNodeIndex + 1;
+
+                node = nodes[keyNodeIndex];
             }
 
             //Now the keyNode is the node at bottom level which not get enough ball, it will only get one ball.
             //So now we can know which branch of this node no ball will pass through it.
             //If its gate is open to left, then the right branch will not get a ball.
-
-            //Pick the node before translating the index, this is important
-            INode keyNode = nodes[keyNodeIndex];
 
             //Translate the index to a lidex at the level instead of the whole tree.
             //For a tree with depth as 4, if the whole tree index of the node is 12,
@@ -136,7 +127,7 @@ namespace GatedTreeSystem
 
             //Then let's check which branch/containter will not get a ball
             //Node index is start from 0, while returned human readable start from 1.
-            return keyNode.GatePosition == GatePosition.Left ?
+            return node.GatePosition == GatePosition.Left ?
                 keyNodeIndex * 2 + 2 :
                 keyNodeIndex * 2 + 1;
         }
@@ -158,16 +149,15 @@ namespace GatedTreeSystem
 
             while (nodeIndex < this.numberOfNodes)
             {
-                node = this.nodes[nodeIndex];
-
                 int nextNodeIndex = node.BallsPassedToLeft < node.BallsPassedToRight ?
                     2 * nodeIndex + 1 :
                     2 * nodeIndex + 2;
 
-                if (nextNodeIndex > this.numberOfNodes)
+                if (nextNodeIndex >= this.numberOfNodes)
                     break;
 
                 nodeIndex = nextNodeIndex;
+                node = this.nodes[nodeIndex];
             }
 
             //Translate the index to a lidex at the level instead of the whole tree.
