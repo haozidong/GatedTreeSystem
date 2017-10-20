@@ -6,6 +6,7 @@ namespace GatedTreeSystem
     /// This class represents a node in our system.
     /// Each node has a gate to control which direction the ball will pass through to: Left or Right.
     /// If the gate is open to Left, a ball will pass this node to its left child.
+    /// If the gate is open to Right, a ball will pass the node to its right child
     /// </summary>
     public class GatedNode : IGatedNode
     {
