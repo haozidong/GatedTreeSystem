@@ -5,7 +5,7 @@ namespace GatedTreeSystem
     /// <summary>
     /// A helper class for <see cref="GatePosition"/>
     /// </summary>
-    static class GatePositionHelper
+    public static class GatePositionHelper
     {
         /// <summary>
         /// A random generater

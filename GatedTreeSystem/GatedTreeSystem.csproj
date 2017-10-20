@@ -42,17 +42,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GatedNodeCreator.cs" />
     <Compile Include="GatedTree.cs" />
+    <Compile Include="GatedTreeController.cs" />
     <Compile Include="GatePosition.cs" />
     <Compile Include="GatePositionHelper.cs" />
+    <Compile Include="IGatedNode.cs" />
+    <Compile Include="IGatedNodeCreator.cs" />
     <Compile Include="IGatedTree.cs" />
-    <Compile Include="INode.cs" />
-    <Compile Include="Node.cs" />
+    <Compile Include="GatedNode.cs" />
+    <Compile Include="IGatedTreeController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

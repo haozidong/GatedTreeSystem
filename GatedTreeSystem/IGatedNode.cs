@@ -5,14 +5,15 @@ namespace GatedTreeSystem
     /// This is the interface for a node in our system.
     /// Each node has a gate to control which direction the ball will pass through to: Left or Right.
     /// </summary>
-    interface INode
+    public interface IGatedNode
     {
         /// <summary>
-        /// Get the gate position of this node.
+        /// Get or set the gate position of this node.
         /// </summary>
         GatePosition GatePosition
         {
             get;
+            set;
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace GatedTreeSystem
 
         /// <summary>
         ///Pass a ball throught this node.
-        /// After a ball passed, the gate of this node will switch to opposite position.
+        ///After a ball passed, the gate of this node will switch to opposite position.
         /// </summary>
         void RunOneBall();
 
@@ -42,5 +43,10 @@ namespace GatedTreeSystem
         /// </summary>
         /// <param name="gatePosition"></param>
         void Reset(GatePosition gatePosition);
+
+        /// <summary>
+        /// Switch the gate from left to right, or from right to left.
+        /// </summary>
+        void SwitchGate();
     }
 }

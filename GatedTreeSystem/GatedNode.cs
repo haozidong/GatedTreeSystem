@@ -6,9 +6,8 @@ namespace GatedTreeSystem
     /// This class represents a node in our system.
     /// Each node has a gate to control which direction the ball will pass through to: Left or Right.
     /// If the gate is open to Left, a ball will pass this node to its left child.
-    /// If the gate is open to Right, a ball will pass the node to its right child
     /// </summary>
-    public class Node : INode
+    public class GatedNode : IGatedNode
     {
         /// <summary>
         /// The fielrecordsds the current position of the gate of this node.
@@ -29,43 +28,26 @@ namespace GatedTreeSystem
         /// Construct a new node, with its initial gate position.
         /// </summary>
         /// <param name="gatePosition">The initial gate position</param>
-        public Node(GatePosition gatePosition)
-        {
-            this.gatePosition = gatePosition;
-        }
+        public GatedNode(GatePosition gatePosition) => this.gatePosition = gatePosition;
 
         /// <summary>
         /// Get the gate position of this node.
         /// </summary>
         public GatePosition GatePosition
         {
-            get
-            {
-                return gatePosition;
-            }
+            get => gatePosition;
+            set => gatePosition = value;
         }
 
         /// <summary>
         /// Get the number of balls passed through this node to its left branch
         /// </summary>
-        public int BallsPassedToLeft
-        {
-            get
-            {
-                return ballsPassedToLeft;
-            }
-        }
+        public int BallsPassedToLeft => ballsPassedToLeft;
 
         /// <summary>
         /// Get the number of balls passed through this node to its right branch
         /// </summary>
-        public int BallsPassedToRight
-        {
-            get
-            {
-                return ballsPassedToRight;
-            }
-        }
+        public int BallsPassedToRight => ballsPassedToRight;
 
         /// <summary>
         /// Reset this node with a gate position.
@@ -100,7 +82,7 @@ namespace GatedTreeSystem
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("{0} ({1}, {2})",
+            return String.Format("{0} ({1},{2})",
                 this.gatePosition == GatePosition.Left ? "/" : "\\",
                 this.ballsPassedToLeft,
                 this.ballsPassedToRight);
@@ -109,7 +91,7 @@ namespace GatedTreeSystem
         /// <summary>
         /// Switch the gate from left to right, or from right to left.
         /// </summary>
-        private void SwitchGate()
+        public void SwitchGate()
         {
             gatePosition = gatePosition == GatePosition.Left ? GatePosition.Right : GatePosition.Left;
         }
