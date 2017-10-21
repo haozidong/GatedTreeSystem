@@ -11,6 +11,21 @@ namespace GatedTreeSystem
     public class GatedNode : IGatedNode
     {
         /// <summary>
+        /// The format string for a gated node.
+        /// </summary>
+        public const string NODE_FORMAT = "{0} ({1},{2})";
+
+        /// <summary>
+        /// The string representation of gate postion left.
+        /// </summary>
+        public const string LEFT_GATE = "/";
+
+        /// <summary>
+        /// The string representation of gate postion right.
+        /// </summary>
+        public const string RIGHT_GATE = "\\";
+
+        /// <summary>
         /// The fielrecordsds the current position of the gate of this node.
         /// </summary>
         private GatePosition gatePosition = GatePosition.Left;
@@ -83,8 +98,8 @@ namespace GatedTreeSystem
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("{0} ({1},{2})",
-                this.gatePosition == GatePosition.Left ? "/" : "\\",
+            return String.Format(NODE_FORMAT,
+                this.gatePosition == GatePosition.Left ? LEFT_GATE : RIGHT_GATE,
                 this.ballsPassedToLeft,
                 this.ballsPassedToRight);
         }

@@ -53,7 +53,7 @@ namespace GatedTreeSystem
 
                     controller.Reset();
 
-                    Console.WriteLine("Press Esc then Enter to exit the system, or press any other key to try again:");
+                    Console.WriteLine("Press Esc then Enter to exit, or press any other key to try again:");
                 }
                 while (Console.ReadKey().Key != ConsoleKey.Escape);
 

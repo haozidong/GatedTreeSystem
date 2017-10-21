@@ -14,6 +14,16 @@ namespace GatedTreeSystem
         public const int MIN_DEPTH = 2;
 
         /// <summary>
+        /// The separater between nodes when output tree as string.
+        /// </summary>
+        public const string NODE_SEPARATER = " ";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string LEVEL_SEPARATER = Environment.NewLine;
+
+        /// <summary>
         /// The depth of the tree
         /// </summary>
         private int depth;
@@ -135,11 +145,11 @@ namespace GatedTreeSystem
                     sb.Append(nodes[node].ToString());
 
                     if (node < to - 1)
-                        sb.Append(" ");
+                        sb.Append(NODE_SEPARATER);
                 }
 
                 if (level < depth - 1)
-                    sb.Append(Environment.NewLine);
+                    sb.Append(LEVEL_SEPARATER);
             }
 
             return sb.ToString();

@@ -70,21 +70,21 @@ namespace GatedTreeSystem.Tests
             node.Reset(GatePosition.Left);
 
             string nodeString = node.ToString();
-            string expect = "/ (0,0)";
+            string expect = String.Format(GatedNode.NODE_FORMAT, GatedNode.LEFT_GATE, 0, 0);
 
             Assert.AreEqual(nodeString, expect);
 
             node.RunOneBall();
 
             nodeString = node.ToString();
-            expect = "\\ (1,0)";
+            expect = String.Format(GatedNode.NODE_FORMAT, GatedNode.RIGHT_GATE, 1, 0);
 
             Assert.AreEqual(nodeString, expect);
 
             node.RunOneBall();
 
             nodeString = node.ToString();
-            expect = "/ (1,1)";
+            expect = String.Format(GatedNode.NODE_FORMAT, GatedNode.LEFT_GATE, 1, 1);
 
             Assert.AreEqual(nodeString, expect);
         }

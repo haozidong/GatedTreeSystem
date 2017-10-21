@@ -9,13 +9,16 @@ namespace GatedTreeSystem.Tests
         // TODO: using a mock framework to replace this.
         class MockNodeCreator : IGatedNodeCreator
         {
+            /// <summary>
+            /// This field will record the number reset be called.
+            /// </summary>
             private int numberOfReset = 0;
 
             public int NumberOfReset => numberOfReset;
 
             public IGatedNode NewGatedNode()
             {
-                MockdNode node = new MockdNode();
+                MockdGatedNode node = new MockdGatedNode();
                 node.OnReset += Node_OnReset;
 
                 return node;
@@ -25,12 +28,16 @@ namespace GatedTreeSystem.Tests
         }
 
         // TODO: using a mock framework to replace this.
-        class MockdNode : IGatedNode
+        class MockdGatedNode : IGatedNode
         {
             public event EventHandler OnReset;
 
             private int ballsPassedToLeft;
             private int ballsPassedToRight;
+
+            /// <summary>
+            /// Gate position is default to left.
+            /// </summary>
             private GatePosition gatePosition = GatePosition.Left;
 
             public GatePosition GatePosition { get => gatePosition; set => gatePosition = value; }
@@ -55,8 +62,8 @@ namespace GatedTreeSystem.Tests
 
             public override string ToString()
             {
-                return String.Format("{0} ({1},{2})",
-                    this.gatePosition == GatePosition.Left ? "/" : "\\",
+                return String.Format(GatedNode.NODE_FORMAT,
+                    this.gatePosition == GatePosition.Left ? GatedNode.LEFT_GATE : GatedNode.RIGHT_GATE,
                     this.ballsPassedToLeft,
                     this.ballsPassedToRight);
             }
@@ -116,10 +123,17 @@ namespace GatedTreeSystem.Tests
             GatedTree tree = new GatedTree(depth, new MockNodeCreator());
             tree.RunOneBall();
 
-            string treeString = tree.ToString();
-            string expected = "\\ (1,0)" + Environment.NewLine + "\\ (1,0) / (0,0)";
+            Assert.AreEqual(tree.Nodes[0].GatePosition, GatePosition.Right);
+            Assert.AreEqual(tree.Nodes[0].BallsPassedToLeft, 1);
+            Assert.AreEqual(tree.Nodes[0].BallsPassedToRight, 0);
 
-            Assert.AreEqual(treeString, expected);
+            Assert.AreEqual(tree.Nodes[1].GatePosition, GatePosition.Right);
+            Assert.AreEqual(tree.Nodes[1].BallsPassedToLeft, 1);
+            Assert.AreEqual(tree.Nodes[1].BallsPassedToRight, 0);
+
+            Assert.AreEqual(tree.Nodes[2].GatePosition, GatePosition.Left);
+            Assert.AreEqual(tree.Nodes[2].BallsPassedToLeft, 0);
+            Assert.AreEqual(tree.Nodes[2].BallsPassedToRight, 0);
         }
 
         [TestMethod]
@@ -130,7 +144,11 @@ namespace GatedTreeSystem.Tests
             GatedTree tree = new GatedTree(depth, new MockNodeCreator());
 
             string treeString = tree.ToString();
-            string expected = "/ (0,0)" + Environment.NewLine + "/ (0,0) / (0,0)";
+            string expected = String.Format(GatedNode.NODE_FORMAT, GatedNode.LEFT_GATE, 0, 0) +
+                GatedTree.LEVEL_SEPARATER +
+                String.Format(GatedNode.NODE_FORMAT, GatedNode.LEFT_GATE, 0, 0) +
+                GatedTree.NODE_SEPARATER +
+                String.Format(GatedNode.NODE_FORMAT, GatedNode.LEFT_GATE, 0, 0);
 
             Assert.AreEqual(treeString, expected);
         }
