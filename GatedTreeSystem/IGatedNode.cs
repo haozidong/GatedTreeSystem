@@ -13,7 +13,6 @@ namespace GatedTreeSystem
         GatePosition GatePosition
         {
             get;
-            set;
         }
 
         /// <summary>

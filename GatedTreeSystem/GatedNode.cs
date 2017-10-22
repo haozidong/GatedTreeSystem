@@ -52,7 +52,6 @@ namespace GatedTreeSystem
         public GatePosition GatePosition
         {
             get => gatePosition;
-            set => gatePosition = value;
         }
 
         /// <summary>
